@@ -35,7 +35,10 @@ def bus_stations(request):
     page_obj = paginator.get_page(current_page)
     if page_obj.has_next():
         page_obj.next_page_number()
-    next_page_url = url_with_querystring(reverse(bus_stations), page=page_obj.next_page_number())
+    try:
+        next_page_url = url_with_querystring(reverse(bus_stations), page=page_obj.next_page_number())
+    except EmptyPage:
+        next_page_url = None
     if page_obj.has_previous():
         page_obj.previous_page_number()
     try:
